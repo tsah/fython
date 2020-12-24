@@ -36,7 +36,7 @@ class FOptional(Generic[T], metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def flatmap(self, f: Callable[[T], FOptional[G]]) -> FOptional[G]:
+    def flatmap(self, f: Callable[[T], Optional[G]]) -> FOptional[G]:
         raise NotImplementedError
 
 
@@ -66,8 +66,8 @@ class FSome(FOptional):
     def map(self, f: Callable[[T], G]) -> FOptional[G]:
         return FSome(f(self._val))
 
-    def flatmap(self, f: Callable[[T], FOptional[G]]) -> FOptional[G]:
-        return f(self._val)
+    def flatmap(self, f: Callable[[T], Optional[G]]) -> FOptional[G]:
+        return option(f(self._val))
 
 
 class FNone(FOptional):

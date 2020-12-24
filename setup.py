@@ -1,11 +1,18 @@
 import setuptools
 
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+
 setuptools.setup(
   name='fython',
-  version='0.0.1',
+  version='0.0.2',
   license='MIT',
   packages=['fython'],
   description='Functional utilities for Python, inspired by Scala',
+  long_description=long_description,
+  long_description_content_type='text/markdown',
   author='Tsah Weiss',
   url='https://github.com/tsah/fython',
   install_requires=[],

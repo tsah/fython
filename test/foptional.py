@@ -32,5 +32,5 @@ def test_some() -> None:
     assert some_option.get_or_else_lazy(raise_) == 1
     assert some_option.get_or_throw() == 1
     assert some_option.map(str).get() == '1'
-    assert some_option.flatmap(lambda x: FSome(str(x))).get() == '1'
-    assert some_option.flatmap(lambda x: FNone()).get() is None
+    assert some_option.flatmap(str).get() == '1'
+    assert some_option.flatmap(lambda x: None).get() is None
