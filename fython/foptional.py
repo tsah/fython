@@ -16,6 +16,14 @@ class FOptional(Generic[T], metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
+    def get_or_else_lazy(self, else_: Callable[[], T]) -> T:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_or_throw(self) -> T:
+        raise NotImplementedError
+
+    @abstractmethod
     def is_some(self) -> bool:
         raise NotImplementedError
 
@@ -33,10 +41,17 @@ class FOptional(Generic[T], metaclass=ABCMeta):
 
 
 class FSome(FOptional):
+
     def __init__(self, val: T) -> None:
         self._val = val
 
     def get(self) -> Optional[T]:
+        return self._val
+
+    def get_or_else_lazy(self, else_: Callable[[], T]) -> T:
+        return self._val
+
+    def get_or_throw(self) -> T:
         return self._val
 
     def get_or_else(self, else_: T) -> T:
@@ -56,8 +71,15 @@ class FSome(FOptional):
 
 
 class FNone(FOptional):
+
     def get(self) -> Optional[T]:
         return None
+
+    def get_or_else_lazy(self, else_: Callable[[], T]) -> T:
+        return else_()
+
+    def get_or_throw(self) -> T:
+        raise AssertionError
 
     def get_or_else(self, else_: T) -> T:
         return else_

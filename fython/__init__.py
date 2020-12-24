@@ -1,1 +1,1 @@
-from foptional import FOptional, FNone, FSome, option
+from fython.foptional import FOptional, FNone, FSome, option
