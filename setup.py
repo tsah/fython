@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
   name='fython',
-  version='0.0.3',
+  version='0.0.4',
   license='MIT',
   packages=['fython'],
   description='Functional utilities for Python, inspired by Scala',

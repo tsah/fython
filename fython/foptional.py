@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABCMeta, abstractmethod
-from typing import TypeVar, Generic, Optional, Callable
+from typing import TypeVar, Generic, Optional, Callable, Iterator
 
 T = TypeVar('T')
 G = TypeVar('G')
@@ -39,11 +39,18 @@ class FOptional(Generic[T], metaclass=ABCMeta):
     def flatmap(self, f: Callable[[T], Optional[G]]) -> FOptional[G]:
         raise NotImplementedError
 
+    @abstractmethod
+    def __iter__(self) -> Iterator[T]:
+        raise NotImplementedError
+
 
 class FSome(FOptional):
 
     def __init__(self, val: T) -> None:
         self._val = val
+
+    def __iter__(self) -> Iterator[T]:
+        return [self._val].__iter__()
 
     def get(self) -> Optional[T]:
         return self._val
@@ -71,6 +78,9 @@ class FSome(FOptional):
 
 
 class FNone(FOptional):
+
+    def __iter__(self) -> Iterator[T]:
+        return [].__iter__()
 
     def get(self) -> Optional[T]:
         return None

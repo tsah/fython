@@ -19,6 +19,9 @@ def test_none() -> None:
     assert none_option.get_or_else_lazy(lambda: r) == r
     with pytest.raises(AssertionError):
         none_option.get_or_throw()
+    for v in none_option:
+        assert False, f"This shouldn't happen. None option contains {v}"
+    assert sum([1 for _ in none_option]) == 0
 
 
 def test_some() -> None:
@@ -34,3 +37,9 @@ def test_some() -> None:
     assert some_option.map(str).get() == '1'
     assert some_option.flatmap(str).get() == '1'
     assert some_option.flatmap(lambda x: None).get() is None
+
+    i = 0
+    for _ in some_option:
+        i += 1
+    assert i == 1
+    assert sum([1 for _ in some_option]) == 1
